@@ -1,0 +1,34 @@
+
+header {
+  padding: 146px 0 75px;
+}
+
+section {
+  padding: 100px 0;
+}
+
+{
+  margin-bottom: 15px;
+}
+
+.list-group-item:hover {
+  background-color: #2d3436;
+  color: whitesmoke;
+}
+
+#showcase{
+  position: relative;
+  background: url('quarantine.jpg');
+  min-height: 600px;
+}
+
+#showcase > .primary-overlay{
+  
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+
+}

@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stay safe</title>
+  <link rel="icon" type="image/png" href="{% static 'mask emoji.png' %}">
+  <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'style.css' %}" rel="stylesheet">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand text-danger">
+        <img src="{% static 'favicon-32x32.png' %}" width="30" height="30" class="d-inline align-bottom">
+        COVID-19
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link btn btn-info btn-sm text-dark">&larr;Back</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br>
+  <div class="container my-5">
+{%if country %}
+      <h1 class="text-center display-4">{{ country }}</h1>
+      <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+              <th>Confirmed Cases</th>
+              <th>Death(s)</th>
+              <th>Recovered</th>
+              <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <th>{{ confirmed_value }}</th>
+              <td>{{ death_value }}</td>
+              <td>{{ recovered_value }}</td>
+              <td>{{ last_update }}</td>
+            </tr>
+        </tbody>
+      </table>
+{% else %}
+<!-- popup using bootstrap (modal) -->
+<div class="modal fade" id="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Result not found</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please enter a valid country name.Try again</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}    
+      <h1 class="mt-2 text-center display-4">Statistics WorldWide</h1>
+      <table class='table table-hover table-striped'> 
+        <thead>
+            <tr>
+              <th>Confirmed Cases</th>
+              <th>Death(s)</th>
+              <th>Recovered</th>
+              <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <th>{{ confirmed_value_worldwide }}</th>
+              <td>{{ death_value_worldwide }}</td>
+              <td>{{ recovered_value_worldwide }}</td>
+              <td>{{ last_update_worldwide }}</td>
+            </tr>
+        </tbody>
+      </table> 
+    
+ </div>
+ <br>
+<div class="row">
+<div class="col-lg-8 mx-auto">
+ <canvas id="myChart" width="100" height="100"></canvas>
+</div>
+</div>
+<!-- Script files -->
+<script src="{% static 'jquery.js' %}"></script>
+<script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'bootstrap.js' %}"></script>
+<script>
+  /*timer value set for 7s */
+  $('#overlay').modal('show');
+setTimeout(function() {
+    $('#overlay').modal('hide');
+}, 7000);
+
+/* storing the values */
+  var state={
+    'items': ['Worldwide cconfirmed','Confirmed cases {{country}}','Worldwide death','death cases {{country}}','Worldwide recovered','recovered cases {{country}}'],
+    'values': [ {{confirmed_value_worldwide}},{{ confirmed_value }},{{ death_value_worldwide }},{{ death_value }},{{ recovered_value_worldwide }},{{ recovered_value }}]
+}
+
+/* chartjs */
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: state.items,
+            datasets: [{
+                label: 'No of people',
+                data: state.values,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    
+
+
+</script>
+</body>
+</html>
+
+
+
+

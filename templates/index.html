@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+  <title>Stay safe</title>
+  <link rel="icon" type="image/png" href="{% static 'mask emoji.png' %}">
+  <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'style.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger text-danger" href="#page-top">
+        <img src="{% static 'favicon-32x32.png' %}" width="30" height="30" class="d-inline align-bottom">
+        COVID-19
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#search">Statistics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header id="showcase">
+    <div class="primary-overlay text-white">
+      <div class="container">
+        <div class="row">
+          <div class="py-5 col-lg-12 col-md-8 text-center">
+            <h1 class="text-center display-2 mt-5 pt-5"> Corona</h1>
+            <p class="text-center lead">The invisible virus has taken control of the whole world.Our nationalities, religion are agnostic to the Coronavirus. The more we unite as fellow beings to address the problem, the earlier we can defeat it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ***********************home section**************************************** -->
+<section id="home">
+    <div class="container" style="width:50rem">
+            <div class="card bg-dark text-white">
+              <div class="card-header text-center">Corona</div>
+              <img class="card-img-top" src="{% static 'corona.jpg' %}" alt="...">
+              <div class="card-body">
+                  <h4 class="card-title">STAY HOME SAVE LIVES</h4>
+                  <h6 class="card-subtitle">Help stop coronavirus</h6>
+                  <p class="card-text">
+                    <ul class="list-group">
+                      <li class="list-group-item list-group-item-dark">STAY home</li>
+                      <li class="list-group-item list-group-item-dark">KEEP a safe distance</li>
+                      <li class="list-group-item list-group-item-dark">WASH hands often</li>
+                      <li class="list-group-item list-group-item-dark">COVER your cough</li>
+                      <li class="list-group-item list-group-item-dark">SICK? Call the helpline</li>
+                    </ul>
+                  </p>
+              </div>
+          </div>
+    </div>
+</section>
+<!-- ***************************Search by frontend for API*********************** -->
+
+  <section id="search" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="text-center">Enter your country name or code</h2>
+          <h6 class="text-center text-muted">Get details such as confirmed cases,death(s),recovered...</h6>
+          <br>
+          <form method="get" name="country" >
+                <input  type="search" class="form-control form-control-lg" placeholder="India USA Australia.." name="country" required = required>
+                <br>
+                <button type="submit" class="btn btn-block btn-lg btn-success">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- **************************************ABOUT section***************************** -->
+
+<section id="about">
+  <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="text-center mb-3">About us</h2>
+          <div class="card-columns">
+            <div class="card bg-dark text-white">
+                    <img class="card-img-top img-fluid" src="{% static 'wobbly eyes.jpg' %}" alt="sowmiyan">
+                    <div class="card-body">
+                        <h4 class="card-title">Sowmiyan</h4>
+                        <p class="card-text">Second year IT-A TCE</p>   
+                    </div>
+            </div> 
+            <div class="card bg-dark text-white">
+                            <img class="card-img-top img-fluid" src="{% static 'wobbly eyes.jpg' %}" alt="ajith">
+                           <div class="card-body">
+                               <h4 class="card-title">Ajith</h4>
+                               <p class="card-text">Second year IT-A TCE</p>           
+                           </div>
+            </div>
+            <div class="card bg-dark text-white">
+                <img class="card-img-top img-fluid" src="{% static 'wobbly eyes.jpg' %}" alt="gokul">
+                <div class="card-body">
+                    <h4 class="card-title">Gokul</h4>
+                    <p class="card-text">Second year IT-A TCE</p>
+                </div>
+            </div>  
+            </div>
+        </div>
+            
+    </div>
+      </div>
+</section>
+
+ 
+  
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Byte_The_Dust 2020</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'jquery.js' %}"></script>
+  <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static 'jquery.easing.min.js' %}"></script>
+
+  <!-- Custom JavaScript for this theme -->
+  <script src="{% static 'scrolling-nav.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poll results</title>
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'jquery.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery.easing.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand text-danger">
+            <img src="{% static 'favicon-32x32.png' %}" width="30" height="30" class="d-inline align-bottom">
+            COVID-19
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a href="{% url 'polls:pollpage' %}" class="nav-link btn btn-info btn-sm text-dark">&larr;Back to pollpage</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+<!-- results -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <h1 class="text-center mt-2 mb-2">{{ qn.question_text }}</h1>
+            <ul class="list-group mb-5">
+                {% for choice in qn.choice_set.all %}
+                <li class="list-group-item">
+                    {{ choice.choice_text }} <span class="badge badge-success float-right">{{ choice.votes }} vote{{ choice.votes | pluralize }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <br>
+        <hr style="border-top: 1px dashed black;">
+        <a class="btn btn-primary offset-md-2 offset-lg-5" href="{% url 'polls:details' qn.id%}">Vote again!</a>
+        </div>
+    </div>  
+</div>
+<br>
+<script>
+    var state={
+        'items': [],
+        'values': []
+    }
+    var obj = "{{qn.id}}"
+    console.log(obj)
+    var dataurl = `/pollpage/resultsdata/${obj}/` 
+    console.log(dataurl)
+    $.ajax({
+        method:'GET',
+        url:dataurl,
+        success:function(response){
+            console.log('hey there:',response)
+            for(var i in response){
+                var key=Object.keys(response[i])[0]
+                var value=Object.values(response[i])[0]
+                state.items.push(key)
+                state.values.push(value)
+            }
+            console.log('state:',state)
+            buildChart()
+        }
+    })
+    function buildChart(){
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: state.items,
+                datasets: [{
+                    label: 'No of Votes',
+                    data: state.values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        
+    }
+ 
+</script>
+</body>
+</html>
+

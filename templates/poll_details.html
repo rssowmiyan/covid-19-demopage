@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Vote</title>
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'jquery.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery.easing.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- nav section -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand text-danger">
+            <img src="{% static 'favicon-32x32.png' %}" width="30" height="30" class="d-inline align-bottom">
+            COVID-19
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a href="{% url 'polls:pollpage' %}" class="nav-link btn btn-info btn-sm text-dark">&larr;Back to pollpage</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <!-- poll qn -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 m-auto">
+              <h1 class="text-center mb-3 mt-3">{{ qn.question_text }}</h1>
+              {% if  error_message %}
+              <p class="alert alert-danger">
+                  <strong>{{ error_message }}</strong>
+              </p>
+              {% endif %}
+              <form action="{% url 'polls:vote' qn.id %}" method="POST">
+                  {% csrf_token %}
+                  {% for choice in qn.choice_set.all %}
+                  <div class="form-check">
+                      <input type="radio" name="choice" class="form-check-input" id="{{ choice.id }}"value="{{ choice.id }}">
+                      <label for="{{ choice.id }}">{{ choice.choice_text }}</label>
+                  </div>
+                  {% endfor %}
+                  <input type="submit" value="Vote" class="btn btn-success btn-lg mt-4 btn-block">
+              </form>
+            </div>
+        </div>  
+    </div>
+  
+ 
+</body>
+</html>
+
+
+
